@@ -65,27 +65,23 @@ calisthenics_exercises = [
         ]
     }
 ]
-
 def generate_workout(exercise_selection, total_time, age, experience_level):
-    
-    # Find the exercises for the given focus
-    openai.api_key = st.secrets["openai"]["api_key"]   # Assuming the variables exercise_selection, total_time, age, experience_level, and calisthenics_exercises are defined
+    selected_exercises = []
+    print("Selected Exercises:")
+    for category in exercise_selection:
+        for item in calisthenics_exercises:
+            if item["category"] == category:
+                print(f"\n{category} Exercises:")
+                for exercise in item["exercises"]:
+                    print(f"- {exercise}")
+                    # Add the exercise to the routine list
+                    selected_exercises.append(exercise)
 
-    prompt = f"""
-    Create a workout, a calisthenics circuit, for the user. Focus: {exercise_selection}. Duration: {total_time} minutes. Make sure each exercise lasts for at least 30 seconds.
-    Additionally, you must take into account these factors when thinking about the endurance and length of each exercise: Age {age}. Experience Level: {experience_level}.
-    Depending on the focus, you can only choose exercises from this list: {calisthenics_exercises}
-    """
+    # Calculate time per exercise (simple division, can be enhanced)
+    time_per_exercise = total_time * 60 // len(selected_exercises) if selected_exercises else 0
+    routine = [(exercise, time_per_exercise) for exercise in selected_exercises]
 
-    response = openai.chat.completions.create(
-        model="deepseek-chat",
-        messages=[
-            {"role": "system", "content": "You are a fitness assistant. Please maintain a respectful and enthusiastic attitude as you give a detailed fitness circuit based on the user's profile"},
-            {"role": "user", "content": prompt},
-        ]
-    )
-
-    print(response.choices[0].message.content)
+    return routine
 
 def main():
     st.title("Fitness Circuit Designer")
@@ -140,8 +136,11 @@ def main():
         st.markdown("---")
 
         if st.button("Generate Workout"):
+            routine = generate_workout(exercise_selection, workout_duration, age, experience_level)
             st.subheader("Your Workout Routine")
-            generate_workout(workout_duration, exercise_selection, age, experience_level)
+            for exercise, secs in routine:
+                st.markdown(f"- **{exercise}** for {secs} seconds")
+
 
     st.markdown("---")
 
