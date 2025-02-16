@@ -79,7 +79,7 @@ def generate_workout(exercise_selection, total_time, age, experience_level):
     Depending on the focus, you can only choose exercises from this list: {calisthenics_exercises}
     """
 
-    response = client.chat.completions.create(
+    response = openai.chat.completions.create(
         model="deepseek-chat",
         messages=[
             {"role": "system", "content": "You are a fitness assistant. Please maintain a respectful and enthusiastic attitude as you give a detailed fitness circuit based on the user's profile"},
