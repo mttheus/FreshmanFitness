@@ -69,8 +69,7 @@ calisthenics_exercises = [
 def generate_workout(exercise_selection, total_time, age, experience_level):
     
     # Find the exercises for the given focus
-    client = openai(api_key="sk-de117b858d9640248b4c0841954eeed7")
-
+    openai.api_key = "sk-de117b858d9640248b4c0841954eeed7"
    # Assuming the variables exercise_selection, total_time, age, experience_level, and calisthenics_exercises are defined
 
     prompt = f"""
