@@ -69,8 +69,7 @@ calisthenics_exercises = [
 def generate_workout(exercise_selection, total_time, age, experience_level):
     
     # Find the exercises for the given focus
-    openai.api_key = "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"
-   # Assuming the variables exercise_selection, total_time, age, experience_level, and calisthenics_exercises are defined
+    openai.api_key = st.secrets["openai"]["api_key"]   # Assuming the variables exercise_selection, total_time, age, experience_level, and calisthenics_exercises are defined
 
     prompt = f"""
     Create a workout, a calisthenics circuit, for the user. Focus: {exercise_selection}. Duration: {total_time} minutes. Make sure each exercise lasts for at least 30 seconds.
