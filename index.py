@@ -1,7 +1,7 @@
 import streamlit as st
 import random
 import numpy as np
-from openai import OpenAI
+import openai
 
 calisthenics_exercises = [
     {
@@ -69,7 +69,7 @@ calisthenics_exercises = [
 def generate_workout(exercise_selection, total_time, age, experience_level):
     
     # Find the exercises for the given focus
-    client = OpenAI(api_key="sk-de117b858d9640248b4c0841954eeed7")
+    client = openai(api_key="sk-de117b858d9640248b4c0841954eeed7")
 
    # Assuming the variables exercise_selection, total_time, age, experience_level, and calisthenics_exercises are defined
 
